@@ -24,3 +24,5 @@ def delete_todo(request, todo_id):
     todo.delete()
     return redirect('todo_list')
 
+
+
