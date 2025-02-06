@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+        form { margin-bottom: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px; border-bottom: 1px solid #ddd; }
+        .completed { text-decoration: line-through; color: gray; }
+        button { margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+
+    <form method="post" action="{% url 'add_todo' %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="New To-Do" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for todo in todos %}
+            <li class="{% if todo.completed %}completed{% endif %}">
+                {{ todo.name }}
+                {% if not todo.completed %}
+                    <a href="{% url 'complete_todo' todo.id %}"><button>Complete</button></a>
+                {% endif %}
+                <a href="{% url 'delete_todo' todo.id %}"><button>Delete</button></a>
+            </li>
+        {% empty %}
+            <p>No to-dos yet!</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
