@@ -17,10 +17,13 @@ def complete_todo(request, todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     todo.completed = True
     todo.save()
+    print("")
     return redirect('todo_list')
 
 def delete_todo(request, todo_id):
     todo = get_object_or_404(TOdo, id=todo_id)
     todo.delete()
     return redirect('todo_list')
+
+
 
